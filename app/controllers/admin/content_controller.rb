@@ -113,6 +113,46 @@ class Admin::ContentController < Admin::BaseController
     render :text => nil
   end
 
+
+  def merge
+
+    unless current_user.profile_id == 1
+      redirect_to :action => 'index'
+      flash[:error] = _("Error, you are not allowed to perform this action")
+      return
+    end
+
+    begin
+       @article = Article.find(params[:id])
+
+    rescue  ActiveRecord::RecordNotFound => msg
+      redirect_to :action => 'index'
+      flash[:error] = _("Error, the main article does not exist")
+      return
+    end
+    
+    begin
+      article_to_merge = Article.find(params[:merge][:with])
+    
+    rescue ActiveRecord::RecordNotFound => msg
+      redirect_to :action => 'index'
+      flash[:error] = _("Error, the article to be merged does not exist")
+      return
+
+    end
+
+    if  @article.id == article_to_merge.id
+      redirect_to :action => 'index'
+      flash[:error] = _("Error, cannot merge the same article")
+      return
+    end
+
+    @article.merge_with(params[:merge][:with])
+
+    redirect_to :action => 'new'
+  end
+  
+
   protected
 
   def get_fresh_or_existing_draft_for_article

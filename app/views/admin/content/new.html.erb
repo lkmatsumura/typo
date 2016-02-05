@@ -1,3 +1,14 @@
 <% @page_heading = _('New article') %>
 
 <%= render "admin/shared/edit", { :form_type => "article", :form_action => { :action => "new", :id => @article.id , :class => ('autosave')} } %>
+
+<%= form_tag( { :action => "merge", :id => @article.id } , { :id => "article_merge_form", :enctype => "multipart/form-data" } ) do %>
+  <h3><%= _("Merge Articles") %></h3>
+  <div class='clearfix'>
+    <label for="merge_with" style="width: 80px; text-align: left;">Article ID </label>
+    <div class='class'>
+        <%= text_field 'merge', 'with', { :style => 'width: 15%'} %>
+    </div>
+    <button id="Merge"  type="submit" class="btn" /><%= _('Merge') %></button>
+  </div>
+<% end %>

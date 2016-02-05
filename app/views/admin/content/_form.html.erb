@@ -100,14 +100,14 @@
     <%= render('images', { :images => @images}) unless @images.empty? %>
 
     <div id='editor-menu'>
-		<ul class="tabs">
-			<li id="f" class='<%= "active" if current_user.editor == 'visual' %>'>
-				<%= build_editor_link("Visual", 'insert_editor', 'fck', 'visual_editor', 'visual') %>
-			</li>
-			<li id="s" class='<%= "active" if current_user.editor == 'simple' %> '>
-				<%= build_editor_link("HTML", 'insert_editor', 'simple', 'simple_editor', 'simple') %>
-			</li>
-		</ul>
+  		<ul class="tabs">
+  			<li id="f" class='<%= "active" if current_user.editor == 'visual' %>'>
+  				<%= build_editor_link("Visual", 'insert_editor', 'fck', 'visual_editor', 'visual') %>
+  			</li>
+  			<li id="s" class='<%= "active" if current_user.editor == 'simple' %> '>
+  				<%= build_editor_link("HTML", 'insert_editor', 'simple', 'simple_editor', 'simple') %>
+  			</li>
+  		</ul>
     </div>
 
     <div id="editor">
@@ -146,8 +146,6 @@
     <ul id='attachments' class='inputs-list'>
       <%= render 'admin/content/attachment', { :attachment_num => 1, :hidden => false } -%>
     </ul>
-  </div>    
   </div>
-
 </div>
 

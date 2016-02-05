@@ -630,5 +630,58 @@ describe Article do
     end
 
   end
-end
+  
+  describe "#merge_with" do
+    before do
+      @a = Factory.create(:article)
+      @b = Factory.create(:article)
+      
+      @a_comment1 = Factory.create(:comment, :article => @a)
+      @a_comment2 = Factory.create(:comment, :article => @a)
 
+      @b_comment1 = Factory.create(:comment, :article => @b)
+      @b_comment2 = Factory.create(:comment, :article => @b)
+      @b_comment3 = Factory.create(:comment, :article => @b)
+
+    end
+    
+    it "should have a merged body " do
+      a_body = @a.body
+      b_body = @b.body
+      
+      @a.merge_with( @b.id )
+      
+      @a.body.should == a_body + ' ' + b_body
+    end
+    
+    it "the merged article should have one author (either one of the authors of the original article)." do
+      a_user = @a.user
+      b_user = @b.user
+      
+      @a.merge_with( @b.id )
+
+      [ a_user, b_user ].should include @a.user
+      
+    end
+    
+    it "The title of the new article should be the title from either one of the merged articles" do
+      a_title = @a.title
+      b_title = @b.title
+      
+      @a.merge_with( @b.id )
+
+      [ a_title , b_title ].should include @a.title
+
+    end
+    
+    it "Comments on each of the two original articles need to all carry over and point to the new, merged article" do
+
+      @a.merge_with( @b.id )
+
+      @a.comments.count.should == 5
+      
+    end
+
+  end
+
+end
