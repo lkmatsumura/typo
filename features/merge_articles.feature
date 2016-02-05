@@ -20,13 +20,19 @@ Feature: Merge Articles
      | 5  | et netus et malesuada fames ac turpis egestas.           | Foobar 2   | Katie  |
      | 6  | Nulla at risus.                                          | Foobar 3   | John   |
 
+#  Scenario: A non-admin cannot merge articles
+#    Given     I am logged in as publisher
+#          And I am on the article page for "Foobar"
+#    When      I fill in "merge_with" with "4"
+#          And I press "Merge"
+#    Then      I should see "Error, you are not allowed to perform this action"
+#          And the article "Foobar" should have body "Lorem Ipsum"
+
   Scenario: A non-admin cannot merge articles
     Given     I am logged in as publisher
           And I am on the article page for "Foobar"
-    When      I fill in "merge_with" with "4"
-          And I press "Merge"
-    Then      I should see "Error, you are not allowed to perform this action"
-          And the article "Foobar" should have body "Lorem Ipsum"
+    Then      I should not see "Merge Articles"
+
 
 
   Scenario: The article to merge does not exist

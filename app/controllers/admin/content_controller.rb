@@ -116,7 +116,7 @@ class Admin::ContentController < Admin::BaseController
 
   def merge
 
-    unless current_user.profile_id == 1
+    unless current_user.admin?
       redirect_to :action => 'index'
       flash[:error] = _("Error, you are not allowed to perform this action")
       return
@@ -132,7 +132,7 @@ class Admin::ContentController < Admin::BaseController
     end
     
     begin
-      article_to_merge = Article.find(params[:merge][:with])
+      article_to_merge = Article.find(params[:merge_with])
     
     rescue ActiveRecord::RecordNotFound => msg
       redirect_to :action => 'index'
@@ -147,7 +147,7 @@ class Admin::ContentController < Admin::BaseController
       return
     end
 
-    @article.merge_with(params[:merge][:with])
+    @article.merge_with(params[:merge_with])
 
     redirect_to :action => 'new'
   end
